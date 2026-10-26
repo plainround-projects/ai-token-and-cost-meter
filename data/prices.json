@@ -1,0 +1,7 @@
+{
+  "model": "claude-haiku-5-5",
+  "input_per_1k": "0.0001",
+  "output_per_1k": "0.0005",
+  "read_date": "2026-10-26",
+  "source": "Anthropic list price for claude-haiku-5-5 ($0.10 and $0.50 per million tokens, prompts up to 100K tokens), copied on read_date. Prices change: read the current ones and update read_date before a real run."
+}
