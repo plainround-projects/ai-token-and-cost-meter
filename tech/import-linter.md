@@ -27,7 +27,7 @@ Because it works on the text of the imports, it needs no running code and is fas
 
 ### The configuration
 
-`pyproject.toml`, lines 76 to 79:
+`pyproject.toml`, lines 77 to 80:
 
 ```toml
 [tool.importlinter]
@@ -36,7 +36,7 @@ include_external_packages = true
 
 ```
 
-`pyproject.toml`, lines 80 to 84:
+`pyproject.toml`, lines 81 to 85:
 
 ```toml
 [[tool.importlinter.contracts]]
@@ -46,7 +46,7 @@ layers = ["token_meter.interfaces", "token_meter.infrastructure", "token_meter.a
 
 ```
 
-`pyproject.toml`, lines 85 to 89:
+`pyproject.toml`, lines 86 to 90:
 
 ```toml
 [[tool.importlinter.contracts]]

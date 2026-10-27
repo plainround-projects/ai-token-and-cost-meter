@@ -8,7 +8,7 @@
 | **Planned hours** | 6 |
 | **Level** | Beginner |
 | **Architecture** | [ARCHITECTURE.md](ARCHITECTURE.md), decisions in [docs/adr](docs/adr) |
-| **Technology notes** | [tech/README.md](tech/README.md), 33 notes that teach every technology used here from zero |
+| **Technology notes** | [tech/README.md](tech/README.md), 42 notes that teach every technology used here from zero |
 
 ## Prerequisites
 

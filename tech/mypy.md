@@ -29,7 +29,7 @@ It does not run the program, so it cannot know values, only types. It saves resu
 
 ### The settings
 
-`pyproject.toml`, lines 48 to 52:
+`pyproject.toml`, lines 49 to 53:
 
 ```toml
 [tool.mypy]
@@ -59,7 +59,7 @@ Each line is explained in `pyproject-toml.md`. The key idea: `strict = true` is 
 
 ### The override for tests
 
-`pyproject.toml`, lines 53 to 58:
+`pyproject.toml`, lines 54 to 59:
 
 ```toml
 [[tool.mypy.overrides]]

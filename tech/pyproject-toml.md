@@ -115,12 +115,14 @@ where = ["src"]
 line-length = 120
 target-version = "py312"
 src = ["src", "tests"]
+extend-exclude = ["tech"]
 ```
 
 - `[tool.ruff]`: Starts the settings of ruff, the linter and formatter (see `ruff.md`).
 - `line-length = 120`: Lines may be up to 120 characters; the formatter wraps longer lines and the linter reports them.
 - `target-version = "py312"`: Check and format for Python 3.12: ruff may use 3.12 syntax and suggests upgrades to it.
 - `src = ["src", "tests"]`: Where the project's own code lives, so ruff can tell project imports from third-party imports when it sorts them.
+- `extend-exclude = ["tech"]`: Also leave the folder `tech/` out of ruff's checks, on top of what it skips by default. The technology notes in `tech/` are Markdown files that quote Python code exactly as it appears in the source; ruff 0.17 can format Python code blocks inside Markdown files, and it would flag every quoted snippet that is a piece of a longer file (for example an indented method) as unformatted. The notes are documentation, not code to format.
 
 ```toml
 [tool.ruff.lint]

@@ -33,9 +33,9 @@ Keys that contain characters other than letters, digits, `-` and `_` must be quo
 - An **array** is a list in square brackets, which may span lines: line 13: `dependencies = [` followed by one quoted item per line and a closing `]`. A trailing comma after the last item is allowed.
 - An **inline table** is a small table in curly braces on one line: line 11: `license = { text = "MIT" }`.
 - An **integer** has no quotes: line 36: `line-length = 120`.
-- A **boolean** is `true` or `false`, lowercase: line 50: `strict = true`.
-- A **nested table** has a dotted header: line 44: `[tool.ruff.lint.per-file-ignores]` means the table `per-file-ignores` inside `lint` inside `ruff` inside `tool`.
-- An **array of tables** has double brackets: line 53: `[[tool.mypy.overrides]]`. Each occurrence adds one more entry to a list named `tool.mypy.overrides`.
+- A **boolean** is `true` or `false`, lowercase: line 51: `strict = true`.
+- A **nested table** has a dotted header: line 45: `[tool.ruff.lint.per-file-ignores]` means the table `per-file-ignores` inside `lint` inside `ruff` inside `tool`.
+- An **array of tables** has double brackets: line 54: `[[tool.mypy.overrides]]`. Each occurrence adds one more entry to a list named `tool.mypy.overrides`.
 - A **comment** starts with `#` and runs to the end of the line.
 
 Reading the file as data gives the structure that tools see. Try the first command below to see it.

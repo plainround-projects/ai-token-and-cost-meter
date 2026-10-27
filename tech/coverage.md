@@ -29,7 +29,7 @@ Python lets a tool register a *trace function* that is called on every line exec
 
 ### The settings in `pyproject.toml`
 
-`pyproject.toml`, lines 68 to 70:
+`pyproject.toml`, lines 69 to 71:
 
 ```toml
 [tool.coverage.run]
@@ -37,7 +37,7 @@ source = ["token_meter"]
 branch = true
 ```
 
-`pyproject.toml`, lines 72 to 74:
+`pyproject.toml`, lines 73 to 75:
 
 ```toml
 [tool.coverage.report]
