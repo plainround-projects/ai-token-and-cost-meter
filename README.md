@@ -8,6 +8,7 @@
 | **Planned hours** | 6 |
 | **Level** | Beginner |
 | **Architecture** | [ARCHITECTURE.md](ARCHITECTURE.md), decisions in [docs/adr](docs/adr) |
+| **Technology notes** | [tech/README.md](tech/README.md), 33 notes that teach every technology used here from zero |
 
 ## Prerequisites
 
@@ -126,6 +127,7 @@ tests/
 data/                prompts.jsonl (50 prompts), prices.json (dated).
 scripts/             make_prompts.py (regenerates the prompt file), pull_model.sh.
 docs/adr/            decision records.
+tech/                one note per technology, from zero (start at tech/README.md).
 pyproject.toml       project metadata and every tool's configuration.
 requirements*.lock   hash-pinned dependencies (runtime, and runtime plus development tools).
 Makefile             the only commands a reader needs (make help).
