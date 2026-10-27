@@ -140,6 +140,13 @@ The dependency rule (domain depends on nothing; application on domain; infrastru
 - **`JournalCorrupt`:** `out/journal.csv` lost its header (for example it was deleted while a run was writing). Delete it and rerun; finished work is in the file only if the header is there.
 - **Slow tests on a busy machine:** building an HTTP client loads the certificate bundle; the unit suite builds a few.
 
+## Verification notes
+
+Verified on 2026-10-27 with `make up`, `make run`, `make test`, `make lint`, `make audit` and `make down`, in the repository and again in a fresh clone.
+
+- **Timing figures** (latencies, durations, the cost-versus-latency ratios) were recorded or measured on a machine whose load average was between 35 and 180, so they support ratios, not service levels. Rerun for clean figures: `make record`.
+- **Docker:** this repository needs no Docker.
+
 ## Author and license
 
 Written by Sumit Srivastava. Released under the MIT License, see [LICENSE](LICENSE). Changes are in [CHANGELOG.md](CHANGELOG.md).
