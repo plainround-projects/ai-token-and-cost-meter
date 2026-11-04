@@ -29,6 +29,8 @@ The dependency rule is the usual one: `domain` imports nothing outside the stand
 
 ## Data flow
 
+Drawn versions of this figure and of the walk-through: [the architecture](docs/diagrams/architecture.svg) and [one run](docs/diagrams/flow.svg).
+
 ```mermaid
 flowchart LR
     P[data/prompts.jsonl<br/>50 prompts] --> E[Estimator]

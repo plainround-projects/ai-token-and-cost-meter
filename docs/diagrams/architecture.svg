@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-labelledby="t d">
+<title id="t">Architecture of ai-token-and-cost-meter: estimate, call, journal, compare</title>
+<desc id="d">An operator runs make run, which calls the meter command in the Python package token_meter. The command starts RunMeter, which asks TokenEstimator for a cost estimate before any call, then sends one request per missing key through the ChatModel port. The adapters are Recorded, OpenAI-compatible and Claude: the recorded adapter replays 450 stored answers, the local one calls ollama with qwen2.5:0.5b, and the Claude adapter cannot take sampling settings. Each billed response is appended to the CSV journal at out/journal.csv with an fsync. The report reads the journal and compares it, with the prompts and dated prices in Inputs, in domain.analysis. In amber, the estimate runs low: chars divided by 4 alone is 37.5 percent low, with overhead 29 it is 20.8 percent low, and leave-one-out is 1.0 percent low.</desc>
+<style>
+:root{--paper:#ffffff;--ink:#10243d;--mute:#52677f;--accent:#0a6aa8;--good:#19743f;--warn:#8a5a00}
+text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace;fill:var(--ink)}
+.title{font-family:Georgia,'Iowan Old Style','Times New Roman',serif;font-size:36px}
+.caption{font-size:16px;fill:var(--mute)}
+.name{font-size:20px;font-weight:600}
+.lane{font-size:17px;font-weight:600}
+.sub{font-size:15px;fill:var(--mute)}
+.label{font-size:15px}
+.tag{font-size:15px;fill:var(--mute)}
+.num{font-size:15px;font-weight:700;fill:var(--paper)}
+.legend{font-size:14px;fill:var(--mute)}
+.t-accent{fill:var(--accent)}
+.t-good{fill:var(--good)}
+.t-warn{fill:var(--warn)}
+.t-ink{fill:var(--ink)}
+.b{font-weight:600}
+.paper{fill:var(--paper);stroke:var(--mute);stroke-opacity:.3}
+.grid{fill:url(#grid)}
+.boundary{fill:var(--mute);fill-opacity:.035;stroke:var(--mute);stroke-opacity:.7;stroke-dasharray:6 5}
+.svc{fill:var(--accent);fill-opacity:.08;stroke:var(--accent);stroke-width:1.25}
+.store{fill:var(--mute);fill-opacity:.1;stroke:var(--mute);stroke-width:1.25}
+.rim{fill:none;stroke:var(--mute);stroke-width:1.25}
+.actor{fill:none;stroke:var(--mute);stroke-width:1.25}
+.slot{fill:var(--accent);fill-opacity:.14;stroke:var(--accent);stroke-width:1}
+.note{fill:var(--warn);fill-opacity:.09;stroke:var(--warn);stroke-width:1}
+.win{fill:var(--good);fill-opacity:.09;stroke:var(--good);stroke-width:1}
+.hair{fill:none;stroke:var(--mute);stroke-opacity:.4;stroke-width:1}
+.zone{fill:var(--accent);fill-opacity:.045;stroke:var(--accent);stroke-width:1.25;stroke-dasharray:6 5}
+.stop{fill:none;stroke:var(--warn);stroke-width:4;stroke-linecap:round}
+.mask{fill:var(--paper)}
+.sync,.async,.read,.fail,.ok{fill:none}
+.sync{stroke:var(--accent);stroke-width:1.75;marker-end:url(#a-sync)}
+.async{stroke:var(--accent);stroke-width:1.75;stroke-dasharray:8 6;marker-end:url(#a-async)}
+.read{stroke:var(--mute);stroke-width:1.75;stroke-linecap:round;stroke-dasharray:1 6;marker-end:url(#a-read)}
+.fail{stroke:var(--warn);stroke-width:2;marker-end:url(#a-fail)}
+.ok{stroke:var(--good);stroke-width:1.75;marker-end:url(#a-ok)}
+.dot{fill:var(--accent)}
+.dot-w{fill:var(--warn)}
+.dot-g{fill:var(--good)}
+.head-sync,.head-async{stroke:var(--accent)}
+.head-sync{fill:var(--accent)}
+.head-async,.head-read{fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.head-read{stroke:var(--mute)}
+.head-fail{fill:var(--warn)}
+.head-ok{fill:var(--good)}
+.gridline{fill:none;stroke:var(--mute);stroke-opacity:.09}
+</style>
+<defs>
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path class="gridline" d="M40 0H0V40"/></pattern>
+<marker id="a-sync" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="head-sync" d="M0 0L10 5L0 10z"/></marker>
+<marker id="a-async" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="head-async" d="M1 1L9 5L1 9"/></marker>
+<marker id="a-read" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="head-read" d="M1 1L9 5L1 9"/></marker>
+<marker id="a-fail" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="head-fail" d="M0 0L10 5L0 10z"/></marker>
+<marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="head-ok" d="M0 0L10 5L0 10z"/></marker>
+</defs>
+<rect class="paper" x="0.5" y="0.5" width="1199" height="899" rx="16"/>
+<rect class="grid" x="1" y="1" width="1198" height="898" rx="16"/>
+<text class="title" x="48" y="68">Estimate first, then call, then compare</text>
+<text class="caption" x="48" y="100">RunMeter estimates before any call and journals one row per call; the report sets the estimate against the bill.</text>
+
+<rect class="actor" x="48" y="176" width="152" height="72" rx="36"/>
+<text class="name" x="124" y="208" text-anchor="middle">Operator</text>
+<text class="sub" x="124" y="230" text-anchor="middle">make run</text>
+
+<rect class="boundary" x="232" y="132" width="764" height="488" rx="14"/>
+<text class="tag" x="248" y="160">Python package token_meter</text>
+
+<rect class="svc" x="256" y="176" width="200" height="84" rx="12"/>
+<text class="name" x="272" y="208">interfaces.cli</text>
+<text class="sub" x="272" y="232">the meter command</text>
+<rect class="svc" x="512" y="176" width="200" height="84" rx="12"/>
+<text class="name" x="528" y="208">RunMeter</text>
+<text class="sub" x="528" y="232">estimate, then call</text>
+<rect class="svc" x="768" y="176" width="200" height="84" rx="12"/>
+<text class="name" x="784" y="208">TokenEstimator</text>
+<text class="sub" x="784" y="232">domain.estimation</text>
+
+<rect class="svc" x="256" y="312" width="200" height="84" rx="12"/>
+<text class="name" x="272" y="344">report</text>
+<text class="sub" x="272" y="368">application.report</text>
+<path class="store" d="M512 312a100 12 0 0 1 200 0v102a100 12 0 0 1 -200 0z"/>
+<path class="rim" d="M512 312a100 12 0 0 0 200 0"/>
+<text class="name" x="612" y="352" text-anchor="middle">CSV journal</text>
+<text class="sub" x="612" y="374" text-anchor="middle">out/journal.csv</text>
+<text class="sub" x="612" y="396" text-anchor="middle">fsync per row</text>
+<rect class="svc" x="768" y="312" width="200" height="84" rx="12"/>
+<text class="name" x="784" y="344">ChatModel</text>
+<text class="sub" x="784" y="368">application.ports</text>
+
+<rect class="svc" x="256" y="448" width="200" height="84" rx="12"/>
+<text class="name" x="272" y="480">domain.analysis</text>
+<text class="sub" x="272" y="504">estimated vs billed</text>
+<path class="store" d="M512 448a100 12 0 0 1 200 0v102a100 12 0 0 1 -200 0z"/>
+<path class="rim" d="M512 448a100 12 0 0 0 200 0"/>
+<text class="name" x="612" y="488" text-anchor="middle">Inputs</text>
+<text class="sub" x="612" y="510" text-anchor="middle">prompts.jsonl, 50</text>
+<text class="sub" x="612" y="532" text-anchor="middle">prices.json, dated</text>
+<rect class="svc" x="768" y="448" width="200" height="140" rx="12"/>
+<text class="name" x="784" y="480">Adapters</text>
+<text class="sub" x="784" y="504">infrastructure</text>
+<text class="sub" x="784" y="526">Recorded</text>
+<text class="sub" x="784" y="548">OpenAI-compatible</text>
+<text class="sub" x="784" y="570">Claude</text>
+
+<rect class="actor" x="1032" y="434" width="120" height="72" rx="36"/>
+<text class="name" x="1092" y="466" text-anchor="middle">ollama</text>
+<text class="sub" x="1092" y="488" text-anchor="middle">qwen2.5:0.5b</text>
+<rect class="actor" x="1032" y="524" width="120" height="72" rx="36"/>
+<text class="name" x="1092" y="556" text-anchor="middle">Claude</text>
+<text class="sub" x="1092" y="578" text-anchor="middle">no sampling</text>
+
+<path class="store" d="M748 650a120 12 0 0 1 240 0v102a120 12 0 0 1 -240 0z"/>
+<path class="rim" d="M748 650a120 12 0 0 0 240 0"/>
+<text class="name" x="868" y="690" text-anchor="middle">Recordings</text>
+<text class="sub" x="868" y="714" text-anchor="middle">tests/fixtures</text>
+<text class="sub" x="868" y="736" text-anchor="middle">450 answers</text>
+
+<rect class="note" x="256" y="650" width="300" height="124" rx="10"/>
+<text class="label b t-warn" x="272" y="678">the estimate runs low</text>
+<text class="sub" x="272" y="702">chars / 4 alone: 37.5% low</text>
+<text class="sub" x="272" y="724">plus overhead 29: 20.8% low</text>
+<text class="sub" x="272" y="746">leave-one-out: 1.0% low</text>
+
+<path class="sync" d="M200 212H256"/>
+<path class="sync" d="M456 218H512"/>
+<path class="sync" d="M712 200H768"/>
+<path class="sync" d="M712 244H740Q752 244 752 256V342Q752 354 764 354H768"/>
+<path class="sync" d="M356 260V312"/>
+<text class="label t-accent" x="368" y="292">meter report</text>
+<path class="sync" d="M612 260V312"/>
+<text class="label t-accent" x="624" y="292">append</text>
+<path class="read" d="M512 354H456"/>
+<path class="sync" d="M356 396V448"/>
+<text class="label t-accent" x="368" y="428">compare</text>
+<path class="read" d="M512 490H456"/>
+<path class="sync" d="M868 396V448"/>
+<text class="label t-accent" x="880" y="428">complete</text>
+<path class="sync" d="M968 470H1032"/>
+<text class="label t-accent" x="976" y="458">HTTP</text>
+<path class="sync" d="M968 560H1032"/>
+<path class="read" d="M868 650V588"/>
+<text class="label" x="880" y="626">replay</text>
+<path class="fail" d="M356 532V650"/>
+<text class="label b t-warn" x="368" y="600">the gap</text>
+
+<path class="sync" d="M48 856H112"/><text class="legend" x="124" y="861">sync call</text>
+<path class="read" d="M520 856H584"/><text class="legend" x="596" y="861">read</text>
+<path class="fail" d="M696 856H760"/><text class="legend" x="772" y="861">failure path</text>
+</svg>

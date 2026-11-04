@@ -10,6 +10,24 @@
 | **Architecture** | [ARCHITECTURE.md](ARCHITECTURE.md), decisions in [docs/adr](docs/adr) |
 | **Technology notes** | [tech/README.md](tech/README.md), 42 notes that teach every technology used here from zero |
 
+## Architecture
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/architecture-dark.svg">
+  <img alt="The meter command starts RunMeter, which asks TokenEstimator for a cost before any call, then sends one request per missing key through the ChatModel port to the Recorded, OpenAI-compatible or Claude adapter. Every billed response is appended to the CSV journal, and the report compares it with the estimate." src="docs/diagrams/architecture.svg">
+</picture>
+
+Look at the order: the estimate and the budget check come before the first call, and the journal is the only record the report reads.
+
+## How one run flows
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/flow-dark.svg">
+  <img alt="A run validates its inputs, estimates all 450 calls, then calls the model once per key and journals each row; the report ends on estimated $0.033820 against billed $0.033896." src="docs/diagrams/flow.svg">
+</picture>
+
+The amber row is the over-budget refusal: the run stops with exit 3 before the model sees a request.
+
 ## Prerequisites
 
 | Tool | Version | Used for |
