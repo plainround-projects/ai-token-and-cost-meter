@@ -18,7 +18,7 @@ Ports and adapters (hexagonal), in four folders. The pattern fits because the sy
 | `application.run_meter` | application | the run: estimate first, refuse above the budget, one call per missing key, one journal row per call, stop between calls on request |
 | `application.report` | application | joins the journal to the prompts and the prices and builds the report |
 | `application.metered_model` | application | a decorator a service can put around any model to log estimate and bill side by side |
-| `application.ports` | application | `ChatModel`, `Embedder`, `Clock`, `Journal` |
+| `application.ports` | application | `ChatModel`, `Embedder`, `Clock`, `Journal` (`Embedder` is declared here but nothing uses it yet) |
 | `infrastructure.recording` | infrastructure | replay and record of model answers as JSON Lines |
 | `infrastructure.openai_compatible`, `anthropic_chat`, `resilient` | infrastructure | the local-server adapter, the Claude adapter and retry with backoff |
 | `infrastructure.csv_journal` | infrastructure | the append-and-fsync journal and its torn-tail rule |

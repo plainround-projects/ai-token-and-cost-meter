@@ -131,7 +131,7 @@ src/token_meter/
                      leave-one-out, spread), llm value objects, named errors.
                      Depends on nothing outside the standard library.
   application/       the run (estimate, budget, restartable calls), the report, the MeteredChatModel decorator,
-                     and the ports (ChatModel, Embedder, Clock, Journal). Depends on domain only.
+                     and the ports (ChatModel, Embedder, Clock, Journal; nothing uses Embedder yet). Depends on domain only.
   infrastructure/    adapters: recorded/recording model, OpenAI-compatible and Claude clients, retry, the CSV journal,
                      file readers, validated settings, logfmt logging, signals. Depends on application and domain.
   interfaces/        the `meter` command (estimate, run, report), exit codes, text rendering.
